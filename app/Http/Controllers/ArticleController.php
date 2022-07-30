@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use App\Http\Requests\ArticleRequest;
+
 
 class ArticleController extends Controller
 {
@@ -53,17 +53,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -86,8 +75,10 @@ class ArticleController extends Controller
     {
         $attributes = $request->only(['title', 'body']);
 
-        if ($request->thumbnail) {
-            // Storage::delete($article->thumbnail);
+
+        if ($request->hasFile('thumbnail')) {
+
+            File::delete(public_path('storage/' . $article->thumbnail));
             $attributes['thumbnail'] = $request->thumbnail->store('thumbnails');
         }
 
