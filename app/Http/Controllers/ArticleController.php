@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 
 
 class ArticleController extends Controller
@@ -71,7 +72,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         $attributes = $request->only(['title', 'body']);
 
